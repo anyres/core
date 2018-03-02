@@ -1,0 +1,22 @@
+{
+  "name": "@anyres/core",
+  "version": "0.1.0",
+  "description": "any resource",
+  "main": "./dist/cmjs/index.js",
+  "module": "./dist/es6/index.js",
+  "scripts": {
+    "build:cmjs": "tsc -P tsconfig.json",
+    "build:es6": "tsc -P tsconfig.json --module ES6 --outDir dist/es6",
+    "db": "json-server --watch db.json",
+    "publish": "npm publish --scope --access public",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "typings": "./dist/cmjs/index.d.ts",
+  "author": "niuba <niuba.zbz@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "rxjs": "^5.5.6",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.2"
+  }
+}
