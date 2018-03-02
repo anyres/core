@@ -1,6 +1,6 @@
 {
   "name": "@anyres/core",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "any resource",
   "main": "./dist/cmjs/index.js",
   "module": "./dist/es6/index.js",
