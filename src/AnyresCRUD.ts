@@ -1,5 +1,8 @@
+import "rxjs/add/operator/catch";
+import "rxjs/add/operator/map";
 import { Observable } from "rxjs/Observable";
 import { ObservableInput } from "rxjs/Observable";
+
 import {
   IHttpAdapter,
   IResCreate,
@@ -61,9 +64,9 @@ export class AnyresCRUD<
       .catch(this.errorHandler);
   }
 
-  public query(query: TQ): Observable<TQR> {
+  public query(query?: TQ): Observable<TQR> {
     return this.http.get(`${this.path}`, {
-      params: query,
+      params: query || {},
     })
       .map((response) => response.json())
       .catch(this.errorHandler);
