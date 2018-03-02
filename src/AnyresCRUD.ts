@@ -39,13 +39,16 @@ export class AnyresCRUD<
   public create(res: TC): Observable<TG> {
     return this.httpAdapter.post(`${this.path}`, {
       body: res,
+      headers: this.getHeaders(),
     })
       .map((response) => response.json())
       .catch(this.errorHandler);
   }
 
   public get(id): Observable<TG> {
-    return this.httpAdapter.get(`${this.path}/${id}`)
+    return this.httpAdapter.get(`${this.path}/${id}`, {
+      headers: this.getHeaders(),
+    })
       .map((response) => response.json())
       .catch(this.errorHandler);
   }
@@ -53,13 +56,16 @@ export class AnyresCRUD<
   public update(res: TU): Observable<TG> {
     return this.httpAdapter.patch(`${this.path}/${res.id}`, {
       body: res,
+      headers: this.getHeaders(),
     })
       .map((response) => response.json())
       .catch(this.errorHandler);
   }
 
   public remove(id: string | number): Observable<any> {
-    return this.httpAdapter.delete(`${this.path}/${id}`)
+    return this.httpAdapter.delete(`${this.path}/${id}`, {
+      headers: this.getHeaders(),
+    })
       .map((response) => response.json())
       .catch(this.errorHandler);
   }
@@ -67,8 +73,15 @@ export class AnyresCRUD<
   public query(query?: TQ): Observable<TQR> {
     return this.httpAdapter.get(`${this.path}`, {
       params: query || {},
+      headers: this.getHeaders(),
     })
       .map((response) => response.json())
       .catch(this.errorHandler);
+  }
+
+  public getHeaders() {
+    return {
+      "Content-type": "application/json",
+    };
   }
 }
