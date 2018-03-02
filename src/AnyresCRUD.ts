@@ -1,5 +1,7 @@
+import "rxjs/add/observable/of";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/map";
+import "rxjs/add/operator/switchMap";
 import { Observable } from "rxjs/Observable";
 import { ObservableInput } from "rxjs/Observable";
 
@@ -37,51 +39,68 @@ export class AnyresCRUD<
   }
 
   public create(res: TC): Observable<TG> {
-    return this.httpAdapter.post(`${this.path}`, {
-      body: res,
-      headers: this.getHeaders(),
-    })
+    return this.getHeaders$()
+      .switchMap((headers) => {
+        return this.httpAdapter.post(`${this.path}`, {
+          body: res,
+          headers,
+        });
+      })
       .map((response) => response.json())
       .catch(this.errorHandler);
   }
 
   public get(id): Observable<TG> {
-    return this.httpAdapter.get(`${this.path}/${id}`, {
-      headers: this.getHeaders(),
-    })
+    return this.getHeaders$()
+      .switchMap((headers) => {
+        return this.httpAdapter.get(`${this.path}/${id}`, {
+          headers,
+        });
+      })
       .map((response) => response.json())
       .catch(this.errorHandler);
   }
 
   public update(res: TU): Observable<TG> {
-    return this.httpAdapter.patch(`${this.path}/${res.id}`, {
-      body: res,
-      headers: this.getHeaders(),
-    })
+    return this.getHeaders$()
+      .switchMap((headers) => {
+        return this.httpAdapter.patch(`${this.path}/${res.id}`, {
+          body: res,
+          headers,
+        });
+      })
       .map((response) => response.json())
       .catch(this.errorHandler);
   }
 
   public remove(id: string | number): Observable<any> {
-    return this.httpAdapter.delete(`${this.path}/${id}`, {
-      headers: this.getHeaders(),
-    })
+    return this.getHeaders$()
+      .switchMap((headers) => {
+        return this.httpAdapter.delete(`${this.path}/${id}`, {
+          headers,
+        });
+      })
       .map((response) => response.json())
       .catch(this.errorHandler);
   }
 
   public query(query?: TQ): Observable<TQR> {
-    return this.httpAdapter.get(`${this.path}`, {
-      params: query || {},
-      headers: this.getHeaders(),
-    })
+    return this.getHeaders$()
+      .switchMap((headers) => {
+        return this.httpAdapter.get(`${this.path}`, {
+          params: query || {},
+          headers,
+        });
+      })
       .map((response) => response.json())
       .catch(this.errorHandler);
   }
 
-  public getHeaders() {
-    return {
+  public getHeaders$(): Observable<{
+    [key: string]: string,
+  }> {
+    return Observable.of({
       "Content-type": "application/json",
-    };
+    });
   }
 }
