@@ -7,8 +7,10 @@
   "scripts": {
     "build:cmjs": "tsc -P tsconfig.json",
     "build:es6": "tsc -P tsconfig.json --module ES6 --outDir dist/es6",
+    "clean": "rimraf ./dist",
+    "build": "npm run clean & npm run build:cmjs & npm run build:es6",
     "db": "json-server --watch db.json",
-    "publish": "npm publish --scope --access public",
+    "pub": "npm publish --scope --access public",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "typings": "./dist/cmjs/index.d.ts",
@@ -18,5 +20,8 @@
     "rxjs": "^5.5.6",
     "tslint": "^5.9.1",
     "typescript": "^2.7.2"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.2"
   }
 }
