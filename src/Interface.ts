@@ -14,7 +14,7 @@ export interface IResUpdate {
 
 export interface IAnyresParams {
   path: string;
-  httpAdapter?: IHttpAdapter;
+  httpAdapterStatic?: IHttpAdapter;
 }
 
 export interface IAnyresRequestOptions {
