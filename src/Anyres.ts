@@ -1,7 +1,9 @@
-import { IAnyresParams } from "./Interface";
+import { IAnyresParams } from "./AnyresCRUD";
+
 export function Anyres(params: IAnyresParams) {
   return (target: any) => {
-    target.prototype.httpAdapterStatic = params.httpAdapterStatic;
     target.prototype.path = params.path;
+    target.prototype.httpAdapterStatic = params.httpAdapterStatic || null;
+    target.prototype.forbiddenMethods = params.forbiddenMethods || [];
   };
 }

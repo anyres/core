@@ -1,18 +1,41 @@
 import "rxjs/add/observable/of";
+import "rxjs/add/observable/throw";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/switchMap";
 import { Observable } from "rxjs/Observable";
 import { ObservableInput } from "rxjs/Observable";
+import { IHttpAdapter } from "./HttpAdapter";
 
-import {
-  IHttpAdapter,
-  IResCreate,
-  IResGet,
-  IResQuery,
-  IResQueryResult,
-  IResUpdate,
-} from "./Interface";
+export interface IResQuery {
+}
+
+export interface IResQueryResult {
+}
+
+export interface IResGet {
+}
+
+export interface IResCreate {
+}
+
+export interface IResUpdate {
+  id: string | number;
+}
+
+export enum HttpMethod {
+  Create = "create",
+  Get = "get",
+  Update = "update",
+  Remove = "remove",
+  Query = "query",
+}
+
+export interface IAnyresParams {
+  path: string;
+  httpAdapterStatic?: IHttpAdapter;
+  forbiddenMethods?: HttpMethod[];
+}
 
 export class AnyresCRUD<
   TQ extends IResQuery,
@@ -23,6 +46,7 @@ export class AnyresCRUD<
   > {
   public path: string;
   public httpAdapterStatic: IHttpAdapter;
+  public forbiddenMethods: HttpMethod[];
 
   constructor(
     private httpAdapter?: IHttpAdapter,
@@ -36,6 +60,11 @@ export class AnyresCRUD<
         return caught;
       };
     }
+    this.forbiddenMethods.forEach((method) => {
+      this[method] = () => {
+        return Observable.throw(new Error(`${method} method forbidden`));
+      };
+    });
   }
 
   public create(res: TC): Observable<TG> {

@@ -1,22 +1,4 @@
 import { Observable } from "rxjs";
-
-export interface IResQuery {
-}
-export interface IResQueryResult {
-}
-export interface IResGet {
-}
-export interface IResCreate {
-}
-export interface IResUpdate {
-  id: string | number;
-}
-
-export interface IAnyresParams {
-  path: string;
-  httpAdapterStatic?: IHttpAdapter;
-}
-
 export interface IAnyresRequestOptions {
   body?: {
     [key: string]: any,
@@ -30,7 +12,7 @@ export interface IAnyresRequestOptions {
 }
 
 export interface IAnyresResponse {
-  status: number;
+  status?: number;
   headers?: any;
   body?: any;
   json?: () => {
