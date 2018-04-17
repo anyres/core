@@ -10,4 +10,4 @@ Anyres inspired by [`ngx-resource`](https://github.com/troyanskiy/ngx-resource-c
 * [`@anyres/angular-http-client-adapter`](https://github.com/anyres/angular-http-client-adapter). Based on `HttpClient` from `@angular/common/http`.
 
 ## Documents
-See GitHub Pages.
+[https://anyres.github.io/core/](https://anyres.github.io/core/)
