@@ -125,6 +125,28 @@ export class AnyresCRUD<
       .catch(this.errorHandler);
   }
 
+  public next(url: string): Observable<TQR> {
+    return this.getHeaders$()
+      .switchMap((headers) => {
+        return this.httpAdapter.get(`${url}`, {
+          headers,
+        });
+      })
+      .map((response) => response.json())
+      .catch(this.errorHandler);
+  }
+
+  public previous(url: string): Observable<TQR> {
+    return this.getHeaders$()
+      .switchMap((headers) => {
+        return this.httpAdapter.get(`${url}`, {
+          headers,
+        });
+      })
+      .map((response) => response.json())
+      .catch(this.errorHandler);
+  }
+
   public getHeaders$(): Observable<{
     [key: string]: string,
   }> {
