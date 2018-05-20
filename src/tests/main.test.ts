@@ -1,9 +1,5 @@
-import { Observable } from "rxjs";
-import "rxjs/add/observable/fromPromise";
-import "rxjs/add/operator/catch";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/switchMap";
-import "rxjs/add/operator/toPromise";
+import { from, Observable } from "rxjs";
+import { catchError, map, switchMap } from "rxjs/operators";
 import {
   Anyres,
   AnyresCRUD,

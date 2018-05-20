@@ -1,10 +1,7 @@
-import "rxjs/add/observable/of";
-import "rxjs/add/observable/throw";
-import "rxjs/add/operator/catch";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/switchMap";
-import { Observable } from "rxjs/Observable";
-import { ObservableInput } from "rxjs/Observable";
+
+import { Observable, ObservableInput, of as observableOf, throwError as observableThrowError } from "rxjs";
+
+import { catchError, map, switchMap } from "rxjs/operators";
 import { IHttpAdapter } from "./HttpAdapter";
 
 export interface IResQuery {
@@ -62,95 +59,102 @@ export class AnyresCRUD<
     }
     this.forbiddenMethods.forEach((method) => {
       this[method] = () => {
-        return Observable.throw(new Error(`${method} method forbidden`));
+        return observableThrowError(new Error(`${method} method forbidden`));
       };
     });
   }
 
   public create(res: TC): Observable<TG> {
-    return this.getHeaders$()
-      .switchMap((headers) => {
+    return this.getHeaders$().pipe(
+      switchMap((headers) => {
         return this.httpAdapter.post(`${this.path}`, {
           body: res,
           headers,
         });
-      })
-      .map((response) => response.json())
-      .catch(this.errorHandler);
+      }),
+      map((response) => response.json()),
+      catchError(this.errorHandler),
+    );
   }
 
   public get(id): Observable<TG> {
-    return this.getHeaders$()
-      .switchMap((headers) => {
+    return this.getHeaders$().pipe(
+      switchMap((headers) => {
         return this.httpAdapter.get(`${this.path}/${id}`, {
           headers,
         });
-      })
-      .map((response) => response.json())
-      .catch(this.errorHandler);
+      }),
+      map((response) => response.json()),
+      catchError(this.errorHandler),
+    );
   }
 
   public update(res: TU): Observable<TG> {
-    return this.getHeaders$()
-      .switchMap((headers) => {
+    return this.getHeaders$().pipe(
+      switchMap((headers) => {
         return this.httpAdapter.patch(`${this.path}/${res.id}`, {
           body: res,
           headers,
         });
-      })
-      .map((response) => response.json())
-      .catch(this.errorHandler);
+      }),
+      map((response) => response.json()),
+      catchError(this.errorHandler),
+    );
   }
 
   public remove(id: string | number): Observable<any> {
-    return this.getHeaders$()
-      .switchMap((headers) => {
+    return this.getHeaders$().pipe(
+      switchMap((headers) => {
         return this.httpAdapter.delete(`${this.path}/${id}`, {
           headers,
         });
-      })
-      .map((response) => response.json())
-      .catch(this.errorHandler);
+      }),
+      map((response) => response.json()),
+      catchError(this.errorHandler),
+    );
   }
 
   public query(query?: TQ): Observable<TQR> {
-    return this.getHeaders$()
-      .switchMap((headers) => {
+    return this.getHeaders$().pipe(
+      switchMap((headers) => {
         return this.httpAdapter.get(`${this.path}`, {
           params: query || {},
           headers,
         });
-      })
-      .map((response) => response.json())
-      .catch(this.errorHandler);
+      }),
+      map((response) => response.json()),
+      catchError(this.errorHandler),
+    );
   }
 
   public next(url: string): Observable<TQR> {
-    return this.getHeaders$()
-      .switchMap((headers) => {
+    return this.getHeaders$().pipe(
+      switchMap((headers) => {
         return this.httpAdapter.get(`${url}`, {
           headers,
         });
-      })
-      .map((response) => response.json())
-      .catch(this.errorHandler);
+      }),
+      map((response) => response.json()),
+      catchError(this.errorHandler),
+    );
   }
 
   public previous(url: string): Observable<TQR> {
-    return this.getHeaders$()
-      .switchMap((headers) => {
+    return this.getHeaders$().pipe(
+      switchMap((headers) => {
         return this.httpAdapter.get(`${url}`, {
           headers,
         });
-      })
-      .map((response) => response.json())
-      .catch(this.errorHandler);
+      }),
+      map((response) => response.json()),
+      catchError(this.errorHandler),
+    );
   }
 
   public getHeaders$(): Observable<{
     [key: string]: string,
   }> {
-    return Observable.of({
+    return observableOf({
       "Content-type": "application/json",
     });
   }

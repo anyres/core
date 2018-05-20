@@ -1,10 +1,9 @@
-import { Observable } from "rxjs";
-import "rxjs/add/observable/of";
+import { Observable, of as observableOf } from "rxjs";
 import { IAnyresRequestOptions, IAnyresResponse, IHttpAdapter } from "..";
 
 export class MockHttpAdapter implements IHttpAdapter {
   public get(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
-    return Observable.of({
+    return observableOf({
       json: () => {
         return {
           id: 1,
@@ -14,7 +13,7 @@ export class MockHttpAdapter implements IHttpAdapter {
     });
   }
   public post(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
-    return Observable.of({
+    return observableOf({
       json: () => {
         return {
           id: 2,
@@ -24,7 +23,7 @@ export class MockHttpAdapter implements IHttpAdapter {
     });
   }
   public put(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
-    return Observable.of({
+    return observableOf({
       json: () => {
         return {
           ...options.body,
@@ -33,14 +32,14 @@ export class MockHttpAdapter implements IHttpAdapter {
     });
   }
   public delete(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
-    return Observable.of({
+    return observableOf({
       json: () => {
         return {};
       },
     });
   }
   public patch(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
-    return Observable.of({
+    return observableOf({
       json: () => {
         return {
           ...options.body,
