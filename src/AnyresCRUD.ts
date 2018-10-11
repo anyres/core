@@ -1,6 +1,5 @@
 
-import { Observable, ObservableInput, of as observableOf, throwError as observableThrowError } from "rxjs";
-
+import { Observable, of, throwError } from "rxjs";
 import { catchError, map, switchMap } from "rxjs/operators";
 import { IHttpAdapter } from "./HttpAdapter";
 
@@ -47,19 +46,19 @@ export class AnyresCRUD<
 
   constructor(
     private httpAdapter?: IHttpAdapter,
-    private errorHandler?: (err: any, caught: Observable<any>) => ObservableInput<any>,
+    private errorHandler?: (err: any) => void,
   ) {
     if (!this.httpAdapter) {
       this.httpAdapter = this.httpAdapterStatic;
     }
     if (!this.errorHandler) {
-      this.errorHandler = (err: any, caught: Observable<any>) => {
-        return caught;
+      this.errorHandler = (err: any) => {
+        console.log(err);
       };
     }
     this.forbiddenMethods.forEach((method) => {
       this[method] = () => {
-        return observableThrowError(new Error(`${method} method forbidden`));
+        return throwError(new Error(`${method} method forbidden`));
       };
     });
   }
@@ -72,8 +71,11 @@ export class AnyresCRUD<
           headers,
         });
       }),
-      map((response) => response.json()),
-      catchError(this.errorHandler),
+      map((response) => response.json() as TG),
+      catchError((err: any) => {
+        this.errorHandler(err);
+        return throwError(err);
+      }),
     );
   }
 
@@ -84,8 +86,11 @@ export class AnyresCRUD<
           headers,
         });
       }),
-      map((response) => response.json()),
-      catchError(this.errorHandler),
+      map((response) => response.json() as TG),
+      catchError((err: any) => {
+        this.errorHandler(err);
+        return throwError(err);
+      }),
     );
   }
 
@@ -97,8 +102,11 @@ export class AnyresCRUD<
           headers,
         });
       }),
-      map((response) => response.json()),
-      catchError(this.errorHandler),
+      map((response) => response.json() as TG),
+      catchError((err: any) => {
+        this.errorHandler(err);
+        return throwError(err);
+      }),
     );
   }
 
@@ -110,7 +118,10 @@ export class AnyresCRUD<
         });
       }),
       map((response) => response.json()),
-      catchError(this.errorHandler),
+      catchError((err: any) => {
+        this.errorHandler(err);
+        return throwError(err);
+      }),
     );
   }
 
@@ -122,8 +133,11 @@ export class AnyresCRUD<
           headers,
         });
       }),
-      map((response) => response.json()),
-      catchError(this.errorHandler),
+      map((response) => response.json() as TQR),
+      catchError((err: any) => {
+        this.errorHandler(err);
+        return throwError(err);
+      }),
     );
   }
 
@@ -134,8 +148,11 @@ export class AnyresCRUD<
           headers,
         });
       }),
-      map((response) => response.json()),
-      catchError(this.errorHandler),
+      map((response) => response.json() as TQR),
+      catchError((err: any) => {
+        this.errorHandler(err);
+        return throwError(err);
+      }),
     );
   }
 
@@ -146,15 +163,18 @@ export class AnyresCRUD<
           headers,
         });
       }),
-      map((response) => response.json()),
-      catchError(this.errorHandler),
+      map((response) => response.json() as TQR),
+      catchError((err: any) => {
+        this.errorHandler(err);
+        return throwError(err);
+      }),
     );
   }
 
   public getHeaders$(): Observable<{
     [key: string]: string,
   }> {
-    return observableOf({
+    return of({
       "Content-type": "application/json",
     });
   }
