@@ -3,11 +3,15 @@
 
 Anyres inspired by [`ngx-resource`](https://github.com/troyanskiy/ngx-resource-core).
 
-### Known IHttpAdapter
+## Known IHttpAdapter
 
 * [`@anyres/wepy-adapter`](https://github.com/anyres/wepy-adapter). Based on `wepy.request` from `wepy`.
 * [`@anyres/axios-adapter`](https://github.com/anyres/axios-adapter). Based on `axios`. 
-* [`@anyres/angular-http-client-adapter`](https://github.com/anyres/angular-http-client-adapter). Based on `HttpClient` from `@angular/common/http`.
+* [`@anyres/ng-anyres`](https://github.com/anyres/ng-anyres). Based on `HttpClient` from `@angular/common/http`.
+
+## Mock tool for angular
+
+* [`@anyres/mock-restful`](https://github.com/anyres/mock-restful).
 
 ## Documents
 [https://anyres.github.io/core/](https://anyres.github.io/core/)
