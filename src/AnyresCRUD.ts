@@ -16,7 +16,6 @@ export interface IResCreate {
 }
 
 export interface IResUpdate {
-  id: string | number;
 }
 
 export enum HttpMethod {
@@ -29,6 +28,7 @@ export enum HttpMethod {
 
 export interface IAnyresParams {
   path: string;
+  primaryKey?: string;
   httpAdapterStatic?: IHttpAdapter;
   forbiddenMethods?: HttpMethod[];
 }
@@ -40,13 +40,14 @@ export class AnyresCRUD<
   TC extends IResCreate,
   TU extends IResUpdate
   > {
+  public primaryKey: string;
   public path: string;
   public httpAdapterStatic: IHttpAdapter;
   public forbiddenMethods: HttpMethod[];
 
   constructor(
-    private httpAdapter?: IHttpAdapter,
-    private errorHandler?: (err: any) => void,
+    public httpAdapter?: IHttpAdapter,
+    public errorHandler?: (err: any) => void,
   ) {
     if (!this.httpAdapter) {
       this.httpAdapter = this.httpAdapterStatic;
@@ -97,7 +98,7 @@ export class AnyresCRUD<
   public update(res: TU): Observable<TG> {
     return this.getHeaders$().pipe(
       switchMap((headers) => {
-        return this.httpAdapter.patch(`${this.path}/${res.id}`, {
+        return this.httpAdapter.patch(`${this.path}/${res[this.primaryKey]}`, {
           body: res,
           headers,
         });

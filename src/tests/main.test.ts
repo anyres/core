@@ -1,14 +1,4 @@
-import { from, Observable } from "rxjs";
-import { catchError, map, switchMap } from "rxjs/operators";
-import {
-  Anyres,
-  AnyresCRUD,
-  IResCreate,
-  IResGet,
-  IResQuery,
-  IResQueryResult,
-  IResUpdate,
-} from "..";
+import { Anyres, AnyresCRUD } from "..";
 import { MockHttpAdapter } from "./MockHttpAdapter";
 
 export interface IPostQuery {
