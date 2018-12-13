@@ -12,10 +12,10 @@ export interface IAnyresRequestOptions {
 }
 
 export interface IAnyresResponse {
-  status?: number;
-  headers?: any;
-  body?: any;
-  json?: () => {
+  status: number;
+  headers: any;
+  body: any;
+  json: () => {
     [key: string]: any,
   };
 }
