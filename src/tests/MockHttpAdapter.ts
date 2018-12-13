@@ -4,6 +4,12 @@ import { IAnyresRequestOptions, IAnyresResponse, IHttpAdapter } from "..";
 export class MockHttpAdapter implements IHttpAdapter {
   public get(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
     return observableOf({
+      status: 200,
+      headers: {},
+      body: {
+        id: 1,
+        title: "title",
+      },
       json: () => {
         return {
           id: 1,
@@ -14,6 +20,12 @@ export class MockHttpAdapter implements IHttpAdapter {
   }
   public post(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
     return observableOf({
+      status: 201,
+      headers: {},
+      body: {
+        id: 2,
+        ...options.body,
+      },
       json: () => {
         return {
           id: 2,
@@ -24,6 +36,11 @@ export class MockHttpAdapter implements IHttpAdapter {
   }
   public put(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
     return observableOf({
+      status: 200,
+      headers: {},
+      body: {
+        ...options.body,
+      },
       json: () => {
         return {
           ...options.body,
@@ -33,6 +50,9 @@ export class MockHttpAdapter implements IHttpAdapter {
   }
   public delete(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
     return observableOf({
+      status: 204,
+      headers: {},
+      body: {},
       json: () => {
         return {};
       },
@@ -40,6 +60,11 @@ export class MockHttpAdapter implements IHttpAdapter {
   }
   public patch(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
     return observableOf({
+      status: 200,
+      headers: {},
+      body: {
+        ...options.body,
+      },
       json: () => {
         return {
           ...options.body,
@@ -48,10 +73,3 @@ export class MockHttpAdapter implements IHttpAdapter {
     });
   }
 }
-
-// test("mock HttpAdapter", () => {
-//   const httpAdapterStatic = new MockHttpAdapter();
-//   return httpAdapterStatic.get("").toPromise().then((data) => {
-//     expect(data.json().title).toBe("title");
-//   });
-// });

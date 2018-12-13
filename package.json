@@ -12,7 +12,7 @@
     "db": "json-server --watch db.json",
     "pub": "npm publish --scope --access public",
     "docs": "typedoc src --out docs --exclude \"**/tests/*.ts\"",
-    "test": "jest"
+    "test": "npm run clean & jest"
   },
   "typings": "./dist/cmjs/index.d.ts",
   "author": "niuba <niuba.zbz@gmail.com>",
