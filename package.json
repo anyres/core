@@ -4,15 +4,26 @@
   "description": "any resource",
   "main": "./dist/cmjs/index.js",
   "module": "./dist/es6/index.js",
+  "homepage": "https://anyres.github.io/core/",
+  "keywords": [
+    "RESTful",
+    "REST",
+    "CRUD",
+    "http"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anyres/core.git"
+  },
   "scripts": {
     "build:cmjs": "tsc -P tsconfig.json",
     "build:es6": "tsc -P tsconfig.json --module ES6 --outDir dist/es6",
     "clean": "rimraf ./dist",
     "build": "npm run clean & npm run build:cmjs & npm run build:es6",
-    "db": "json-server --watch db.json",
     "pub": "npm publish --scope --access public",
     "docs": "typedoc src --out docs --exclude \"**/tests/*.ts\"",
-    "test": "npm run clean & jest"
+    "test": "npm run clean & jest",
+    "upload:coverage": "codecov ./coverage/lcov.info"
   },
   "typings": "./dist/cmjs/index.d.ts",
   "author": "niuba <niuba.zbz@gmail.com>",
@@ -24,12 +35,15 @@
   },
   "devDependencies": {
     "@types/jest": "^23.3.10",
+    "codecov": "^3.1.0",
     "jest": "^23.6.0",
     "rimraf": "^2.6.2",
     "ts-jest": "^23.10.5",
     "typedoc": "^0.13.0"
   },
   "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },

@@ -142,36 +142,6 @@ export class AnyresCRUD<
     );
   }
 
-  public next(url: string): Observable<TQR> {
-    return this.getHeaders$().pipe(
-      switchMap((headers) => {
-        return this.httpAdapter.get(`${url}`, {
-          headers,
-        });
-      }),
-      map((response) => response.json() as TQR),
-      catchError((err: any) => {
-        this.errorHandler(err);
-        return throwError(err);
-      }),
-    );
-  }
-
-  public previous(url: string): Observable<TQR> {
-    return this.getHeaders$().pipe(
-      switchMap((headers) => {
-        return this.httpAdapter.get(`${url}`, {
-          headers,
-        });
-      }),
-      map((response) => response.json() as TQR),
-      catchError((err: any) => {
-        this.errorHandler(err);
-        return throwError(err);
-      }),
-    );
-  }
-
   public getHeaders$(): Observable<{
     [key: string]: string,
   }> {
